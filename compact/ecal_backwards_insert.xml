@@ -1,0 +1,100 @@
+<lccdd>
+
+  <info name="ecal_forward_insert_homogeneous.xml"
+        title="Homogeneous insert for forward ECal"
+        author="@rymilton"
+        url="https://github.com/rymilton"
+        status="development"
+        version="1.0"
+  ><comment/></info>
+
+  <define>
+    <documentation>
+      #### Material Thickness
+    </documentation>
+    <comment> ECal insert thicknesses </comment>
+    <constant name="BackwardsEcalInsertPCBThickness"              value="0.08*cm"/>
+    <constant name="BackwardsEcalInsertScintillatorThickness"     value="0.3*cm"/>
+    <constant name="BackwardsEcalInsertAbsorberThickness"       value="0.35*cm"/>
+    
+
+    <documentation>
+      - ECal Insert N Layers and computed Thickness
+    </documentation>
+    <constant name="BackwardsEcalInsertSingleLayerThickness"
+      value = "BackwardsEcalInsertPCBThickness +
+               BackwardsEcalInsertAbsorberThickness +
+               BackwardsEcalInsertScintillatorThickness "
+      />
+    <comment>pairs of layers</comment>
+    <constant name="BackwardsEcalInsertLayer_NRepeat" value="BackwardsEcalInsert_numLayers/2"/>
+  </define>
+
+  <limits>
+  </limits>
+
+  <regions>
+  </regions>
+
+  <display>
+  </display>
+
+  <detectors>
+    <documentation>
+      ### Forward (Positive Z) Endcap Insert for Electromagnetic Calorimeter
+      Insert goes in the middle of the forward endcap ECal -- around the beampipe
+
+      Homogeneous implementation of the ScFi insert
+      Each layer contains an aluminum cover, an air gap, PCB, light guides, and scintillating material
+      
+    </documentation>
+    <detector
+      id="BackwardsEcalInsert_ID" 
+      name="BackwardsEcalInsert" 
+      type="InsertCalorimeter"
+      readout="BackwardsEcalInsertHits"
+    >
+      <position x="BackwardsEcalInsert_xposition" y="0*m" z="BackwardsEcalInsert_zmin"/>
+      <rotation x="0" y="0" z="0"/>
+      <dimensions 
+        x="BackwardsEcalInsert_width"
+        y="BackwardsEcalInsert_height"
+        z="BackwardsEcalInsertSingleLayerThickness * BackwardsEcalInsertLayer_NRepeat*2+BackwardsEcalInsertAbsorberThickness"
+	/>
+      <layer repeat="1" thickness = "BackwardsEcalInsertAbsorberThickness">
+        <slice name="Absorber_slice" material="W" thickness="BackwardsEcalInsertAbsorberThickness" vis="AnlBlue"/>
+      </layer>
+      <!--pairs of layers-->
+      <layer repeat="BackwardsEcalInsertLayer_NRepeat" thickness = "2*BackwardsEcalInsertSingleLayerThickness">
+        <slice name="Scintillator1_slice" material="PlasticScint126" thickness="BackwardsEcalInsertScintillatorThickness" vis="AnlOrange" sensitive="true"/>
+        <slice name="PCB1_slice" material="Fr4" thickness="BackwardsEcalInsertPCBThickness" vis="AnlDarkRed"/>
+        <slice name="Absorber1_slice" material="W" thickness="BackwardsEcalInsertAbsorberThickness" vis="AnlBlue"/>
+	 <slice name="PCB2_slice" material="Fr4" thickness="BackwardsEcalInsertPCBThickness" vis="AnlDarkRed" sensitive="true"/>
+         <slice name="Scintillator2_slice" material="PlasticScint126" thickness="BackwardsEcalInsertScintillatorThickness" vis="AnlOrange" sensitive="true"/>
+	 <slice name="Absorber2_slice" material="W" thickness="BackwardsEcalInsertAbsorberThickness" vis="AnlBlue"/> 
+      </layer>
+      <beampipe_hole 
+        initial_hole_radius="BackwardsEcalInsert_opening_hole_radius"
+        final_hole_radius="BackwardsEcalInsert_final_hole_radius"
+      />
+    </detector>
+  </detectors>
+
+  <readouts>
+    <readout name="BackwardsEcalInsertHits">
+      <segmentation 
+        type="CartesianGridXY"
+        grid_size_x="0.5*cm"
+        grid_size_y="0.5*cm"
+      />
+      <id>system:8,barrel:3,module:4,layer:8,slice:5,x:32:-16,y:-16</id>  
+    </readout>
+  </readouts>
+
+  <plugins>
+  </plugins>
+
+  <fields>
+  </fields>
+
+</lccdd>
