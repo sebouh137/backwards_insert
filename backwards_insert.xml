@@ -7,7 +7,7 @@
     <include ref="${DD4hepINSTALL}/DDDetectors/compact/detector_types.xml"/>
     <!--<include ref="ip6/definitions.xml" /> -->
     <include ref="compact/definitions.xml" />
-    <include ref="compact/configuration_nohole.xml"/>
+    <include ref="compact/configuration_default.xml"/>
   </define>
 
   <includes>

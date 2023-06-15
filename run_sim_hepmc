@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # Input simulation parameters
-particle="pi-"
-beam_energy=50
-num_events=10
-theta_min=178 # in degrees
-theta_max=178 # in degrees
+particle="e-"
+beam_energy=18
+num_events=100
+theta_min=170 # in degrees
+theta_max=170 # in degrees
 phi_min=0. # in degrees
 phi_max=360. # in degrees 
 physics_list="FTFP_BERT_HP"
+
+theta="${theta_min}-${theta_max}"
 
 # Output file names
 info_string="${particle}_${beam_energy}GeV_theta_${theta}deg"

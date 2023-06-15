@@ -13,11 +13,14 @@
       #### Material Thickness
     </documentation>
     <comment> ECal insert thicknesses </comment>
+    <!--<constant name="BackwardsEcalInsertPCBThickness"              value="0.0001*cm"/>
+    <constant name="BackwardsEcalInsertScintillatorThickness"     value="0.3*cm"/>-->
     <constant name="BackwardsEcalInsertPCBThickness"              value="0.08*cm"/>
-    <constant name="BackwardsEcalInsertScintillatorThickness"     value="0.3*cm"/>
+    <constant name="BackwardsEcalInsertScintillatorThickness"     value="0.2*cm"/>
     <constant name="BackwardsEcalInsertAbsorberThickness"       value="0.35*cm"/>
-    
 
+    <constant name="BackwardsEcalInsert_ScintWidth" value="1.0*cm"/>
+    <constant name="BackwardsEcalInsert_ScintLength" value="5.0*cm"/>
     <documentation>
       - ECal Insert N Layers and computed Thickness
     </documentation>
@@ -51,7 +54,7 @@
     <detector
       id="BackwardsEcalInsert_ID" 
       name="BackwardsEcalInsert" 
-      type="InsertCalorimeter"
+      type="InsertCalorimeterBack"
       readout="BackwardsEcalInsertHits"
     >
       <position x="BackwardsEcalInsert_xposition" y="0*m" z="BackwardsEcalInsert_zmin"/>
@@ -62,16 +65,16 @@
         z="BackwardsEcalInsertSingleLayerThickness * BackwardsEcalInsertLayer_NRepeat*2+BackwardsEcalInsertAbsorberThickness"
 	/>
       <layer repeat="1" thickness = "BackwardsEcalInsertAbsorberThickness">
-        <slice name="Absorber_slice" material="W" thickness="BackwardsEcalInsertAbsorberThickness" vis="AnlBlue"/>
+        <slice name="Absorber_slice" material="Tungsten" thickness="BackwardsEcalInsertAbsorberThickness" vis="AnlBlue"/>
       </layer>
       <!--pairs of layers-->
       <layer repeat="BackwardsEcalInsertLayer_NRepeat" thickness = "2*BackwardsEcalInsertSingleLayerThickness">
         <slice name="Scintillator1_slice" material="PlasticScint126" thickness="BackwardsEcalInsertScintillatorThickness" vis="AnlOrange" sensitive="true"/>
         <slice name="PCB1_slice" material="Fr4" thickness="BackwardsEcalInsertPCBThickness" vis="AnlDarkRed"/>
-        <slice name="Absorber1_slice" material="W" thickness="BackwardsEcalInsertAbsorberThickness" vis="AnlBlue"/>
-	 <slice name="PCB2_slice" material="Fr4" thickness="BackwardsEcalInsertPCBThickness" vis="AnlDarkRed" sensitive="true"/>
+        <slice name="Absorber1_slice" material="Tungsten" thickness="BackwardsEcalInsertAbsorberThickness" vis="AnlBlue"/>
+	 <slice name="PCB2_slice" material="Fr4" thickness="BackwardsEcalInsertPCBThickness" vis="AnlDarkRed"/>
          <slice name="Scintillator2_slice" material="PlasticScint126" thickness="BackwardsEcalInsertScintillatorThickness" vis="AnlOrange" sensitive="true"/>
-	 <slice name="Absorber2_slice" material="W" thickness="BackwardsEcalInsertAbsorberThickness" vis="AnlBlue"/> 
+	 <slice name="Absorber2_slice" material="Tungsten" thickness="BackwardsEcalInsertAbsorberThickness" vis="AnlBlue"/> 
       </layer>
       <beampipe_hole 
         initial_hole_radius="BackwardsEcalInsert_opening_hole_radius"
@@ -82,11 +85,22 @@
 
   <readouts>
     <readout name="BackwardsEcalInsertHits">
-      <segmentation 
-        type="CartesianGridXY"
-        grid_size_x="0.5*cm"
-        grid_size_y="0.5*cm"
-      />
+      <segmentation type="MultiSegmentation" key="slice">
+	<segmentation
+	    name="vertical"
+            type="CartesianGridXY"
+            grid_size_x="BackwardsEcalInsert_ScintWidth"
+            grid_size_y="BackwardsEcalInsert_ScintLength"
+	    key_value="1" 
+	    />
+	<segmentation
+            name="horizontal"
+            type="CartesianGridXY"
+            grid_size_x="BackwardsEcalInsert_ScintLength"
+            grid_size_y="BackwardsEcalInsert_ScintWidth"
+            key_value="5"
+            />
+      </segmentation>
       <id>system:8,barrel:3,module:4,layer:8,slice:5,x:32:-16,y:-16</id>  
     </readout>
   </readouts>
