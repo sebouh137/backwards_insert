@@ -25,7 +25,7 @@
   <include ref="compact/colors.xml" />
   </display>
   
-  <documentation level="11">
+  <!--<documentation level="11">
     ## Central beam pipe
   </documentation>
   <include ref="${DETECTOR_PATH}/compact/central_beampipe.xml"/>
@@ -38,14 +38,13 @@
   <documentation level="11">
     ## Far backward detectors
   </documentation>
-  <include ref="${DETECTOR_PATH}/compact/far_backward.xml"/>
+  <include ref="${DETECTOR_PATH}/compact/far_backward.xml"/>-->
 
-  <comment> Including the backward insert </comment>
-  <include ref="compact/ecal_backwards_insert.xml"/>
-  <comment> Flanges </comment>
+  <!--<comment> Including the backward insert </comment>
+  include ref="compact/ecal_backwards_insert.xml"/>-->
+  <comment> Flange </comment>
   <include ref="compact/flange_at_-120cm.xml"/>
-  <include ref="compact/flange_at_-270cm.xml"/>
-  
+
   <detectors>
   </detectors>
 

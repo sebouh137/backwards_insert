@@ -1,0 +1,64 @@
+<lccdd>
+
+  <info name="ecal_forward_insert_homogeneous.xml"
+        title="Homogeneous insert for forward ECal"
+        author="@rymilton"
+        url="https://github.com/rymilton"
+        status="development"
+        version="1.0"
+  ><comment/></info>
+
+  <define>
+    <include ref="${DD4hepINSTALL}/DDDetectors/compact/detector_types.xml"/>
+    <documentation>
+      #### Material Thickness
+    </documentation>
+    
+    <constant name="MicroFlange_ZMax" value="-269.72*cm"/>
+    <constant name="MicroFlange_ZMin" value="MicroFlange_ZMax-2.54*cm"/>
+    <constant name="MicroFlange_IR1" value="8.2346/2*cm"/>
+    <constant name="MicroFlange_OR1" value="11.106/2*cm"/>
+    <constant name="MicroFlange_IR2" value="3.1475/2*cm"/>
+    <constant name="MicroFlange_OR2" value="2.8440*cm"/>
+    <constant name="MicroFlange_X2" value="6.743*cm"/>
+
+
+  </define>
+
+  <limits>
+  </limits>
+
+  <regions>
+  </regions>
+
+  <display>
+  </display>
+
+  <detectors>
+    <documentation>
+
+      Micro flange
+      
+    </documentation>
+    
+    <detector name="Microflange_part1" type="DD4hep_TubeSegment">
+      <material name="Aluminum"/>
+      <tubs rmin="MicroFlange_IR1" rmax="MicroFlange_OR1" zhalf="(MicroFlange_ZMax-MicroFlange_ZMin)/2."/>
+      <position x="0" y="0" z="(MicroFlange_ZMin+MicroFlange_ZMax)/2."/>
+      <rotation x="0" y="0" z="0"/>
+    </detector>
+
+    
+  </detectors>
+
+  <readouts>
+    
+  </readouts>
+
+  <plugins>
+  </plugins>
+
+  <fields>
+  </fields>
+
+</lccdd>

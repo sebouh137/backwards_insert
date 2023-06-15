@@ -5,7 +5,7 @@
       Backwards ECal insert will add a backlayer of only absorber
     </documentation>
     
-    <constant name="BackwardsEcalInsert_zmin"                 value="-279*cm"/>
+    <constant name="BackwardsEcalInsert_zmin"                 value="-330*cm"/>
     <constant name="BackwardsEcalInsert_xposition"            value="0*cm"/>
     <constant name="BackwardsEcalInsert_width"                value="40.*cm"/>
     <constant name="BackwardsEcalInsert_height"               value="40.*cm"/>

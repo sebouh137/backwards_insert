@@ -1,0 +1,65 @@
+<lccdd>
+
+  <info name="ecal_forward_insert_homogeneous.xml"
+        title="Homogeneous insert for forward ECal"
+        author="@rymilton"
+        url="https://github.com/rymilton"
+        status="development"
+        version="1.0"
+  ><comment/></info>
+
+  <define>
+    <include ref="${DD4hepINSTALL}/DDDetectors/compact/detector_types.xml"/>
+    <documentation>
+      #### Material Thickness
+    </documentation>
+    <comment> ECal insert thicknesses </comment>
+    <constant name="BigFlange_IR"     value="4.60*cm"/>-->
+    <constant name="BigFlange_OR"     value="7.58*cm"/>
+    <constant name="BigFlange_MinZ"     value="-123.96*cm"/>
+    <constant name="BigFlange_MaxZ"       value="-120*cm"/>
+
+  </define>
+
+  <limits>
+  </limits>
+
+  <regions>
+  </regions>
+
+  <display>
+  </display>
+
+  <detectors>
+    <documentation>
+
+      Flange between the central and far forward region, plus the microflange.  
+      
+    </documentation>
+
+    <detector name="BigFlange_part1" type="DD4hep_TubeSegment">
+      <material name="Aluminum"/>
+      <tubs rmin="BigFlange_IR" rmax="BigFlange_OR" zhalf="(BigFlange_MaxZ-BigFlange_MinZ)/2."/>
+      <position x="0" y="0" z="(BigFlange_MinZ+BigFlange_MaxZ)/2."/>
+      <rotation x="0" y="0" z="0"/>
+    </detector>
+    <detector name="BigFlange_part2" type="DD4hep_TubeSegment">
+      <material name="Aluminum"/>
+      <tubs rmin="BigFlange_IR-1.1*cm" rmax="BigFlange_IR" zhalf="(BigFlange_MaxZ-BigFlange_MinZ-1.2*cm)/2."/>
+      <position x="0" y="0" z="(BigFlange_MinZ+1.2*cm+BigFlange_MaxZ)/2."/>
+      <rotation x="0" y="0" z="0"/>
+    </detector>
+    
+  </detectors>
+
+  <readouts>
+    
+  </readouts>
+
+  <plugins>
+  </plugins>
+
+  <fields>
+  </fields>
+
+</lccdd>
