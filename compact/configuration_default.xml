@@ -4,13 +4,13 @@
       Backwards ECal insert will add a backlayer of only absorber
     </documentation>
     
-    <constant name="BackwardsEcalInsert_zmin"                 value="-330*cm"/>
+    <constant name="BackwardsEcalInsert_zmin"                 value="-320*cm"/>
     <constant name="BackwardsEcalInsert_xposition"            value="0*cm"/>
-    <constant name="BackwardsEcalInsert_width"                value="40.*cm"/>
-    <constant name="BackwardsEcalInsert_height"               value="40.*cm"/>
-    <constant name="BackwardsEcalInsert_numLayers"            value="22"/>
-    <constant name="BackwardsEcalInsert_opening_hole_radius"  value="6.580*cm"/>
-    <constant name="BackwardsEcalInsert_final_hole_radius"    value="6.580*cm"/>
+    <constant name="BackwardsEcalInsert_width"                value="30.*cm"/>
+    <constant name="BackwardsEcalInsert_height"               value="30.*cm"/>
+    <constant name="BackwardsEcalInsert_numLayers"            value="20"/>
+    <constant name="BackwardsEcalInsert_opening_hole_radius"  value="5.0*cm"/>
+    <constant name="BackwardsEcalInsert_final_hole_radius"    value="5.0*cm"/>
 
     
   </define>
