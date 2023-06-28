@@ -68,7 +68,7 @@ static Ref_t createDetector(Detector& desc, xml_h handle, SensitiveDetector sens
 	envelope,
         electron_hole,
         Position(
-          0.,
+		 0.-pos.x(),
           0.,
           0
         )
@@ -79,7 +79,7 @@ static Ref_t createDetector(Detector& desc, xml_h handle, SensitiveDetector sens
         envelope_with_hole1,
         hadron_hole,
         Position(
-          hole_x_2,
+		 hole_x_2-pos.x(),
           0.,
           0
         )
@@ -90,7 +90,7 @@ static Ref_t createDetector(Detector& desc, xml_h handle, SensitiveDetector sens
         envelope_with_hole2,
         connecting_hole,
         Position(
-          hole_x_2/2,
+		 hole_x_2/2-pos.x(),
           0.,
           0
         )

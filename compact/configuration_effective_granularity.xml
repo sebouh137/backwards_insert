@@ -5,8 +5,8 @@
     </documentation>
     
     <constant name="BackwardsEcalInsert_zmin"                 value="-320*cm"/>
-    <constant name="BackwardsEcalInsert_xposition"            value="0*cm"/>
-    <constant name="BackwardsEcalInsert_width"                value="30.*cm"/>
+    <constant name="BackwardsEcalInsert_xposition"            value="5*cm"/>
+    <constant name="BackwardsEcalInsert_width"                value="40.*cm"/>
     <constant name="BackwardsEcalInsert_height"               value="30.*cm"/>
     <constant name="BackwardsEcalInsert_numLayers"            value="20"/>
     <constant name="BackwardsEcalInsert_hole_radius_1"  value="5.0*cm"/>
