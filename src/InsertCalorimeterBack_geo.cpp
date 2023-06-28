@@ -30,44 +30,24 @@ static Ref_t createDetector(Detector& desc, xml_h handle, SensitiveDetector sens
   const xml::Component &beampipe_hole_xml = detElem.child(
     _Unicode(beampipe_hole)
   );
-  const double hole_radius_initial = dd4hep::getAttrOrDefault<double>(
+  const double hole_radius_1 = dd4hep::getAttrOrDefault<double>(
     beampipe_hole_xml,
-    _Unicode(initial_hole_radius),
-    15.0*cm
+    _Unicode(hole_radius_1),
+    5.0*cm
   );
-  const double hole_radius_final = dd4hep::getAttrOrDefault<double>(
+  const double hole_radius_2 = dd4hep::getAttrOrDefault<double>(
     beampipe_hole_xml,
-    _Unicode(final_hole_radius),
-    17.25*cm
+    _Unicode(hole_radius_2),
+    2.3*cm
   );
 
-  // Getting thickness of backplate
-  auto backplate_thickness = dd4hep::getAttrOrDefault<double>(
-    detElem,
-    _Unicode(backplate_thickness),
-    1.61*cm
+  const double hole_x_2 = dd4hep::getAttrOrDefault<double>(
+    beampipe_hole_xml,
+    _Unicode(hole_x_2),
+    8.3*cm
   );
 
-  // Function that returns a linearly interpolated hole radius at a given z
-  auto get_hole_radius = [
-    hole_radius_initial, 
-    hole_radius_final, 
-    length,
-    backplate_thickness
-  ]
-  (double z_pos) 
-  {
-    /*
-        radius = (hole_radius_final - hole_radius_initial)/(length) * z_pos +  hole_radius_initial
-        Treats the beginning of the insert as z = 0
-        At z = 0 (beginning of first layer), hole radius is hole_radius_initial
-        The radius is hole_radius_final at the beginning of the backplate, 
-          i.e. z = length - backplate_thickness
-    */
-    double slope = (hole_radius_final - hole_radius_initial) / (length - backplate_thickness);
-    return slope * z_pos + hole_radius_initial;
-  };
-
+    
   // Defining envelope
   Box envelope(width / 2.0, height / 2.0, length / 2.0);
 
@@ -76,62 +56,47 @@ static Ref_t createDetector(Detector& desc, xml_h handle, SensitiveDetector sens
     x = 0 in local coordinate system is x = HcalEndcapPInsert_xposition in global coordinate system
     Hole starts at x = 0 cm in global system
   */
-  const double initial_hole_x = 0 - pos.x();
-  
-  // Keeps track of the hole's x location for each layer
-  double hole_x_tracker = initial_hole_x;
-
-  // Keeps track of the z location as we move longiduinally through the insert
-  // Will use this tracking variable as input to get_hole_radius 
-  double z_distance_traversed = 0.;
+  //const double hole_x_1 = 0 - pos.x();
 
   /* 
     Cutting out the hole from the envelope
     Cut out hole layer-by-layer to get exact desired shape
     Subtracting a cone is difficult since the cone would have to be angled towards the negative x direction
   */
-
-  // Looping through all the different layer sections
-  for(xml_coll_t c(detElem,_U(layer)); c; ++c) 
-  {
-    xml_comp_t x_layer = c;
-    int repeat = x_layer.repeat();
-    double layer_thickness = x_layer.thickness();
-
-    // Looping through the number of repeated layers in each section
-    for (int ilayer = 0; ilayer < repeat; ilayer++)
-    {
-      const double hole_radius = get_hole_radius(z_distance_traversed);
-      Tube layer_hole(0., hole_radius, layer_thickness / 2.);
-      
-      /*
-        X-Position:
-        The hole starts at x = 2.3 cm with respect to local coordinate system.
-        The hole shifts by -.0569 cm with each layer
-
-        Z-Position:
-        -length / 2. is front of insert,
-        +z_distance_traversed goes to the front of each layer,
-        +layer_thickness / 2. is the half-length of a layer
-          (i.e. where to put the cutout shape)
-      */
-
-      SubtractionSolid envelope_with_hole(
-        envelope, 
-        layer_hole, 
+  Tube electron_hole(0., hole_radius_1, length / 2.);
+  SubtractionSolid envelope_with_hole1(
+	envelope,
+        electron_hole,
         Position(
-          hole_x_tracker,
-          0., 
-          (-length + layer_thickness)/2. + z_distance_traversed 
+          0.,
+          0.,
+          0
         )
       );
-      // Removing the hole layer by layer from envelope
-      envelope = envelope_with_hole;
-
-      z_distance_traversed += layer_thickness; // Moving hole along z
-      hole_x_tracker -= 0.0569; // Moving hole along x
-    }
-  }
+  envelope = envelope_with_hole1;
+  Tube hadron_hole(0., hole_radius_2, length / 2.);
+  SubtractionSolid envelope_with_hole2(
+        envelope_with_hole1,
+        hadron_hole,
+        Position(
+          hole_x_2,
+          0.,
+          0
+        )
+      );
+  envelope = envelope_with_hole2;
+  Box connecting_hole(hole_x_2/2,hole_radius_2, length/2.);
+  SubtractionSolid envelope_with_hole3(
+        envelope_with_hole2,
+        connecting_hole,
+        Position(
+          hole_x_2/2,
+          0.,
+          0
+        )
+      );
+  envelope=envelope_with_hole3;
+  
 
   // Defining envelope volume
   Volume envelopeVol(detName, envelope, air); 
@@ -145,10 +110,8 @@ static Ref_t createDetector(Detector& desc, xml_h handle, SensitiveDetector sens
 
   PlacedVolume pv;
 
-  // Resetting trackers for layer construction
-  hole_x_tracker = initial_hole_x;
-  z_distance_traversed = 0.;
-
+  
+  double z_distance_traversed = 0.;
   int layer_num = 1;
   
   // Looping through all the different layer sections
@@ -165,17 +128,18 @@ static Ref_t createDetector(Detector& desc, xml_h handle, SensitiveDetector sens
 
       Box layer(width / 2., height / 2., layer_thickness / 2.);
 
-      // Hole radius for each layer is determined from z position of the front of the layer
-      const double hole_radius = get_hole_radius(z_distance_traversed);
+
+
 
       // Removing beampipe shape from each layer
-      Tube layer_hole(0., hole_radius, layer_thickness / 2.);
-      SubtractionSolid layer_with_hole(
+      //Tube layer_hole(0., hole_radius, layer_thickness / 2.);
+      IntersectionSolid layer_with_hole(
         layer,
-        layer_hole,
-        Position(hole_x_tracker, 0., 0.)
+        envelope
       );
       Volume layer_vol(layer_name, layer_with_hole, air);
+
+      
 
       int slice_num = 1;
       double slice_z = -layer_thickness / 2.; // Keeps track of slices' z locations in each layer
@@ -191,11 +155,10 @@ static Ref_t createDetector(Detector& desc, xml_h handle, SensitiveDetector sens
 
         // Each slice within a layer has the same hole radius
         Box slice(width/2., height/2., slice_thickness/2.);
-        Tube slice_hole(0., hole_radius, slice_thickness / 2.);
-        SubtractionSolid slice_with_hole(
+        
+        IntersectionSolid slice_with_hole(
           slice,
-          slice_hole,
-          Position(hole_x_tracker, 0., 0.)
+          envelope
         );
         Volume slice_vol (slice_name, slice_with_hole, slice_mat);
         
@@ -260,7 +223,7 @@ static Ref_t createDetector(Detector& desc, xml_h handle, SensitiveDetector sens
       );
       pv.addPhysVolID("layer", layer_num);
       layer_num++;
-      hole_x_tracker -= 0.0; // The hole shifts along -x by 0 cm every layer
+      //hole_x_tracker -= 0.0; // The hole shifts along -x by 0 cm every layer
     }
   }
 

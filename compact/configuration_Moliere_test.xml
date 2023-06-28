@@ -12,7 +12,7 @@
     <constant name="BackwardsEcalInsert_hole_radius_1"  value="5.0*cm"/>
     <constant name="BackwardsEcalInsert_hole_radius_2"    value="2.3*cm"/>
     <constant name="BackwardsEcalInsert_hole_x_2"    value="8.3*cm"/>
-    <constant name="BackwardsEcalInsert_ScintWidth" value="1.0*cm"/>
-    <constant name="BackwardsEcalInsert_ScintLength" value="5.0*cm"/>
+    <constant name="BackwardsEcalInsert_ScintWidth" value="0.1*cm"/>
+    <constant name="BackwardsEcalInsert_ScintLength" value="0.1*cm"/>
     
   </define>
