@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # Input simulation parameters
-particle="e-"
-beam_energy=5
-num_events=500
-theta_min=178.85 # in degrees
-theta_max=178.85 # in degrees
-phi_min=105. # in degrees
-phi_max=105. # in degrees 
+particle="mu-"
+beam_energy=18
+num_events=10000
+theta_min=176 # in degrees
+theta_max=178.75 # in degrees
+phi_min=0. # in degrees
+phi_max=360. # in degrees 
 physics_list="FTFP_BERT_HP"
 
-theta="${theta_min}-${theta_max}"
+thetastr="${theta_min}-${theta_max}"
 
 # Output file names
-info_string="${particle}_${beam_energy}GeV_theta_${theta}deg"
+info_string="${particle}_${beam_energy}GeV_theta_${thetastr}deg"
 hepmcfile="gen_${info_string}.hepmc"
 simfile="insert_sim_${info_string}.edm4hep.root"
 recofile="insert_reco_${info_string}.edm4hep.root"
@@ -31,7 +31,7 @@ ${beam_energy})"
 
 # Running simulation
 npsim \
-   --compactFile backwards_insert_with_flanges.xml \
+   --compactFile backwards_insert.xml \
    --numberOfEvents ${num_events} \
    --physicsList ${physics_list} \
    --inputFiles ${hepmcfile} \

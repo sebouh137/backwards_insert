@@ -23,7 +23,7 @@ for theta in [2*np.arctan(np.exp(-eta))]:
     nils = []
     rads=[]
     for phi in phis:
-        Z=500 if eta>0 else -315
+        Z=500 if eta>0 else -330
         uxp = np.sin(theta)*np.cos(phi)
         uyp = np.sin(theta)*np.sin(phi)
         uzp = np.cos(theta)
