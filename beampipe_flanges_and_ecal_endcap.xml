@@ -1,9 +1,9 @@
 <lccdd>
   <define>
-    <!--<include ref="${DETECTOR_PATH}/compact/fields/beamline_18x275.xml" />
+    <include ref="${DETECTOR_PATH}/compact/fields/beamline_18x275.xml" />
     <include ref="${DETECTOR_PATH}/compact/far_forward/definitions.xml" />
     <include ref="${DETECTOR_PATH}/compact/far_backward/definitions.xml" />
-    <include ref="${DETECTOR_PATH}/compact/definitions.xml" />-->
+    <include ref="${DETECTOR_PATH}/compact/definitions.xml" />
     <include ref="${DD4hepINSTALL}/DDDetectors/compact/detector_types.xml"/>
     <!--<include ref="ip6/definitions.xml" />-->
     <include ref="compact/definitions.xml" />
@@ -13,6 +13,7 @@
   <includes>
     <gdmlFile ref="compact/elements.xml"/>
     <gdmlFile ref="compact/materials.xml"/>
+    <gdmlFile ref="${DETECTOR_PATH}/compact/optical_materials.xml" />
   </includes>
 
   <limits>
@@ -24,7 +25,7 @@
   <display>
   <include ref="compact/colors.xml" />
   </display>
-  <!--
+  
   <documentation level="11">
     ## Central beam pipe
   </documentation>
@@ -39,14 +40,18 @@
     ## Far backward detectors
   </documentation>
   <include ref="${DETECTOR_PATH}/compact/far_backward.xml"/>
-
   
-  <comment> Flanges </comment>
-  <include ref="compact/flange_at_-120cm.xml"/>
+  <documentation level="11">
+    #ECal Endcap
+  </documentation>
+
+  <include ref="compact/emcal_endcap_simplified.xml"/> 
+  <comment> Including the backward insert </comment>
+  <!--<include ref="compact/ecal_backwards_insert.xml"/>-->
+  <comment> Flange </comment>
   <include ref="compact/flange_at_-270cm.xml"/>
-  -->
-  <comment> Including the backward insert </comment> 
-  <include ref="compact/ecal_backwards_insert.xml"/>  
+  <include ref="compact/flange_at_-120cm.xml"/>
+  
   <detectors>
   </detectors>
 

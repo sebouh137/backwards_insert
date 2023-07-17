@@ -5,11 +5,11 @@ for beam_energy in 0.9 1 2 5 10 18; do
     # Input simulation parameters
     particle="e-"
     #beam_energy=18
-    num_events=100
+    num_events=500
     theta_min=178 # in degrees
     theta_max=178 # in degrees
-    phi_min=0. # in degrees
-    phi_max=360. # in degrees 
+    phi_min=90. # in degrees
+    phi_max=270. # in degrees 
     physics_list="FTFP_BERT_HP"
 
     theta="${theta_min}-${theta_max}"
