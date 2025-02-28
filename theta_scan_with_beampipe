@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#for theta in 176.000 176.125 176.250 176.375 176.500 176.625 176.750 176.875 177.000 177.125 177.250 177.375 177.500 177.625 177.750 177.875 178.000 178.125 178.250 178.375 178.500 178.625 178.750 178.875 179.000 179.125 ; do
-for theta in 177.875 178.85; do
+for theta in 176.000 176.125 176.250 176.375 176.500 176.625 176.750 176.875 177.000 177.125 177.250 177.375 177.500 177.625 177.750 177.875 178.000 178.125 178.250 178.375 178.500 178.625 178.750 178.875 179.000 179.125 ; do
+
 #for theta in 178.75; do
     # Input simulation parameters
     particle="e-"
     beam_energy=5
-    num_events=10000
+    num_events=500
     theta_min=$theta # in degrees
     theta_max=$theta # in degrees
     phi_min=0. # in degrees
@@ -34,7 +34,7 @@ ${beam_energy})"
 
     # Running simulation
     npsim \
-   --compactFile backwards_insert.xml \
+   --compactFile backwards_insert_with_beampipe_and_flange.xml \
    --numberOfEvents ${num_events} \
    --physicsList ${physics_list} \
    --inputFiles ${hepmcfile} \

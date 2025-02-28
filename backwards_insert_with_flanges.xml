@@ -42,8 +42,8 @@
   -->
   
   <comment> Flanges </comment>
-  <include ref="compact/flange_at_-120cm.xml"/>
-  <include ref="compact/flange_at_-270cm.xml"/>
+  <!--<include ref="compact/flange_at_-120cm.xml"/>-->
+  <include ref="compact/flange_at_-225cm.xml"/>
   
   <comment> Including the backward insert </comment> 
   <include ref="compact/ecal_backwards_insert.xml"/>  
